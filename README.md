@@ -77,9 +77,6 @@ care is not being accessed. Two hypothesized barriers:
 | S1 | High need, low utilization | Infrastructure investment, community-led care models |
 | S2 | High need, high ER utilization | Outpatient facility expansion, preventive care awareness |
 
-## Dashboard
-![Dashboard Preview](visuals/dashboard_screenshot.png)
-
 ## Skills Demonstrated
 - Python (pandas, matplotlib, seaborn)
 - SQL (SQLite, CTEs, window functions, subqueries)
