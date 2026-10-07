@@ -15,7 +15,7 @@
 --     were cast to 0, which pulled the risk score minimum down to 0)
 --   * counties below a minimum FFS beneficiary count are excluded, so tiny
 --     counties with noisy rates do not dominate the ranking
---     (requires BENES_FFS_CNT in the table; try 500 and 1000 and compare)
+--     (requires BENES_FFS_CNT in the table. Try 500 and 1000 and compare.)
 WITH base AS (
     SELECT
         BENE_GEO_DESC,

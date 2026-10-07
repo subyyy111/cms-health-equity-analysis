@@ -48,7 +48,9 @@ Known limits of these proxies: dual eligibility also includes beneficiaries unde
 | + risk score | 20 | 4 to 37 | 0.16 |
 | + risk score + Medicare Advantage rate | 20 | 4 to 37 | 0.16 |
 
-Among counties with the same risk score and Medicare Advantage rate, each 10-point higher dual eligibility rate is associated with about 20 more ER visits per 1,000, roughly 3% of the average county's ER use. Accounting for risk score reduces the raw link by about a third. The confidence interval is wide, and the model explains only about 16% of the variation in ER use, so most of what drives county ER use is outside this model. Medicare Advantage rate had no meaningful relationship and did not change the result.
+Among counties with the same risk score and Medicare Advantage rate, each 10-point higher dual eligibility rate is associated with about 20 more ER visits per 1,000, roughly 3.5% of the average county's ER use (about 584 visits per 1,000, weighted). Accounting for risk score reduces the raw link by about a third. The confidence interval is wide, and the model explains only about 16% of the variation in ER use, so most of what drives county ER use is outside this model. Medicare Advantage rate had no meaningful relationship and did not change the result.
+
+**Robustness.** Dropping the 17 Alaska counties leaves the estimate unchanged (about 21). Without weighting, the estimate is larger (about 45), because small counties have noisier and more extreme rates, so the weighted estimate of about 20 is the conservative one.
 
 **3. More ER users and more visits per user.** The share of beneficiaries with any ER visit is about 12% higher in the highest quartile, and visits per ER user rise steadily across quartiles, from about 1.9 to 2.1 (about 13% higher). The extra ER use comes roughly equally from more people using the ER and from more visits per user.
 
@@ -59,7 +61,7 @@ Among counties with the same risk score and Medicare Advantage rate, each 10-poi
 - County-level associations only. These results describe counties, not individual beneficiaries.
 - Risk score partly includes Medicaid status, so poverty is partly counted twice in the need score, and the two regression predictors overlap.
 - Risk scores depend on diagnoses being recorded. Where people see doctors less, risk scores likely understate need.
-- The regression errors are skewed with some extreme counties, including counties with far fewer ER visits than predicted. Robust standard errors are used, but these counties deserve a closer look.
+- The regression errors are skewed by a few extreme counties, mostly in Alaska, with far fewer ER visits than predicted. Robust standard errors are used, and removing Alaska does not change the result, but these counties deserve a closer look.
 - One year (2023). I have not yet checked whether the pattern holds across 2014 to 2023.
 - Care outside Medicare FFS (Medicare Advantage, VA, Indian Health Service and tribal health programs) is not visible in this file.
 
@@ -70,18 +72,21 @@ Some counties on the dashboard show a high need score but relatively low ER use.
 ## Repository
 
 ```
-data/raw/            CMS file (not committed, download from data.cms.gov)
-notebooks/           01_data_exploration.ipynb, 02_sql_analysis.ipynb
-sql/                 equity_analysis_queries.sql
-dashboard/           cms_equity_dashboard.pbix and screenshots
+README.md
+cms_equity_dashboard.pbix     Power BI dashboard
+data/raw/                     CMS file (zipped CSV, also available from data.cms.gov)
+docs/                         CMS data dictionary and methods paper
+notebooks/01_data_exploration.ipynb   cleaning, quartiles, regression, robustness checks
+notebooks/02_sql_analysis.ipynb       runs the SQL queries against a SQLite table
+sql/equity_analysis_queries.sql       need score, ER visits per user, high ER counties
+visuals/                      charts and dashboard screenshot
 ```
 
 ## How to reproduce
 
-1. Download the CMS Geographic Variation PUF (2014 to 2023) from data.cms.gov and save it in `data/raw/`.
-2. Run `notebooks/01_data_exploration.ipynb` (cleaning, quartiles, regression).
-3. Run `notebooks/02_sql_analysis.ipynb` to load the `cms_county` table and run the queries in `sql/equity_analysis_queries.sql`.
-4. Open `dashboard/cms_equity_dashboard.pbix` in Power BI Desktop.
+1. Run `notebooks/01_data_exploration.ipynb`. It reads the zipped CSV in `data/raw/` directly.
+2. Run `notebooks/02_sql_analysis.ipynb` to load the `cms_county` table and run the queries in `sql/equity_analysis_queries.sql`.
+3. Open `cms_equity_dashboard.pbix` in Power BI Desktop.
 
 ## Tools
 
